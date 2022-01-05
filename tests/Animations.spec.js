@@ -1,9 +1,19 @@
 import { Animations } from "../src/Animations";
 
-const testTarget = document.createElement("div");
-testTarget.style.height = "100px";
+const createTestTarget = () => {
+  const target = document.createElement("div");
+  target.style.height = "100px";
+  return target;
+}
+let testTarget;
 
 describe("General animations", () => {
+  beforeEach(() => {
+    testTarget = createTestTarget();
+  });
+  afterEach(() => {
+    testTarget = undefined;
+  })
   it("slideUp function returns Promise", () => {
     expect(Animations.slideUp(testTarget) instanceof Promise).toBe(true);
   });
