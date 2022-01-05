@@ -20,4 +20,17 @@ describe("General animations", () => {
 	it("slideDown function returns Promise", () => {
     expect(Animations.slideDown(testTarget) instanceof Promise).toBe(true);
   });
+  it("`clearStylesAfterAnimation` works properly without `hideBlock` argument", () => {
+    testTarget.style.overflow = "scroll";
+    Animations.clearStylesAfterAnimation(testTarget);
+    expect(testTarget.style.overflow).toBeFalsy();
+    expect(testTarget.style.height).toBeFalsy();
+  });
+  it("`clearStylesAfterAnimation` works properly with `hideBlock` true", () => {
+    testTarget.style.overflow = "scroll";
+    Animations.clearStylesAfterAnimation(testTarget, true);
+    expect(testTarget.style.overflow).toBeFalsy();
+    expect(testTarget.style.height).toBeFalsy();
+    expect(testTarget.style.display).toBe("none");
+  });
 });
