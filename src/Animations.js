@@ -1,4 +1,4 @@
-export const Animations = {
+export const HeightAnimation = {
   clearStylesAfterAnimation: (target, hideBlock = false) => {
 		if (hideBlock) target.style.display = "none";
     target.style.removeProperty("height");
