@@ -4,13 +4,27 @@ export const HeightAnimation = {
     target.style.removeProperty("height");
     target.style.removeProperty("overflow");
   },
+  setStylesBeforeSlideUp: (target, height) => {
+    target.style.height = height + "px";
+    target.style.overflow = "hidden";
+  },
+  setStylesBeforeSlideDown: (target) => {
+    //Check if already shown
+    target.style.removeProperty("display");
+    let display = window.getComputedStyle(target).display;
+    if (display === "none") {
+      display = "block";
+    }
+    target.style.display = display;
+    //set start styles
+    target.style.height = "0";
+    target.style.overflow = "hidden";
+  },
   slideUp: (target, duration = 500) => {
     return new Promise((resolve) => {
       //remember full height
       const height = target.scrollHeight;
-      //set initial styles for animation
-      target.style.height = height + "px";
-      target.style.overflow = "hidden";
+      this.setStylesBeforeSlideUp(height);
       // set final styles
       let startAnimation = null;
       function step(timestamp) {
@@ -32,18 +46,9 @@ export const HeightAnimation = {
   },
   slideDown: (target, duration = 500) => {
     return new Promise((resolve) => {
-      //Check if already shown
-      target.style.removeProperty("display");
-      let display = window.getComputedStyle(target).display;
-      if (display === "none") {
-        display = "block";
-      }
-      target.style.display = display;
+      this.setStylesBeforeSlideDown(target);
       //remember full height
       const height = target.scrollHeight;
-      //set start styles
-      target.style.height = 0;
-      target.style.overflow = "hidden";
       //set final styles
       let startAnimation = null;
       function step(timestamp) {
