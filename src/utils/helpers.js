@@ -13,7 +13,7 @@ export const runAnimation = ({
     function step(timestamp) {
       if (!startAnimation) startAnimation = timestamp;
       const progressAnimation = timestamp - startAnimation;
-      animateOneStep();
+      animateOneStep(progressAnimation);
       if (progressAnimation < duration) {
         window.requestAnimationFrame(step);
       } else {
