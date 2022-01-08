@@ -1,35 +1,38 @@
 import { HeightAnimation } from "../src/Animations";
-const heightAnimation =  Object.create(HeightAnimation);
 
 const createTestTarget = () => {
   const target = document.createElement("div");
   target.style.height = "100px";
   return target;
-}
+};
 let testTarget;
+let testAnimation;
 
 describe("General animations", () => {
   beforeEach(() => {
+    testAnimation = Object.create(HeightAnimation);
     testTarget = createTestTarget();
+    testAnimation.init(testTarget);
   });
   afterEach(() => {
     testTarget = undefined;
-  })
+    testAnimation = undefined;
+  });
   it("slideUp function returns Promise", () => {
-    expect(heightAnimation.slideUp(testTarget) instanceof Promise).toBe(true);
+    expect(testAnimation.slideUp() instanceof Promise).toBe(true);
   });
-	it("slideDown function returns Promise", () => {
-    expect(heightAnimation.slideDown(testTarget) instanceof Promise).toBe(true);
+  it("slideDown function returns Promise", () => {
+    expect(testAnimation.slideDown() instanceof Promise).toBe(true);
   });
-  it("`clearStylesAfterAnimation` works properly without `hideBlock` argument", () => {
+  it("`clearStyles` works properly for `slideDown` animation", () => {
     testTarget.style.overflow = "scroll";
-    heightAnimation.clearStylesAfterAnimation(testTarget);
+    testAnimation.clearStyles("slideDown");
     expect(testTarget.style.overflow).toBeFalsy();
     expect(testTarget.style.height).toBeFalsy();
   });
-  it("`clearStylesAfterAnimation` works properly with `hideBlock` true", () => {
+  it("`clearStyles` works properly for `slideUp`", () => {
     testTarget.style.overflow = "scroll";
-    heightAnimation.clearStylesAfterAnimation(testTarget, true);
+    testAnimation.clearStyles("slideUp");
     expect(testTarget.style.overflow).toBeFalsy();
     expect(testTarget.style.height).toBeFalsy();
     expect(testTarget.style.display).toBe("none");
