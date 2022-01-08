@@ -1,69 +1,85 @@
-import {exist, runAnimation} from "./utils/helpers.js";
+import { exist, runAnimation } from "./utils/helpers.js";
 
 export const HeightAnimation = {
   targetElement: null,
   fullHeight: 0,
   duration: 500,
-  clearStylesAfterAnimation(hideBlock = false) {
-    if (hideBlock) this.targetElement.style.display = "none";
+  setInitialStyles(animationName) {
+    switch (animationName) {
+      case "slideUp":
+        this.targetElement.style.height = this.fullHeight + "px";
+        this.targetElement.style.overflow = "hidden";
+        break;
+      case "slideDown":
+        //Check if already shown
+        this.targetElement.style.removeProperty("display");
+        let display = window.getComputedStyle(this.targetElement).display;
+        if (display === "none") {
+          display = "block";
+        }
+        this.targetElement.style.display = display;
+        //set start styles
+        this.targetElement.style.height = "0";
+        this.targetElement.style.overflow = "hidden";
+        break;
+      default:
+        throw new Error(`Animation name ${animationName} was not found!`);
+    }
+  },
+  clearStyles(animationName) {
+    if (animationName === "slideUp") this.targetElement.style.display = "none";
     this.targetElement.style.removeProperty("height");
     this.targetElement.style.removeProperty("overflow");
   },
-  setStylesBeforeSlideUp() {
-    this.targetElement.style.height = this.fullHeight + "px";
-    this.targetElement.style.overflow = "hidden";
-  },
-  setStylesBeforeSlideDown() {
-    //Check if already shown
-    this.targetElement.style.removeProperty("display");
-    let display = window.getComputedStyle(this.targetElement).display;
-    if (display === "none") {
-      display = "block";
+  oneStepAnimate(progressAnimation, animationName) {
+    switch (animationName) {
+      case "slideUp":
+        this.targetElement.style.height =
+          this.fullHeight -
+          (this.fullHeight * progressAnimation) / this.duration +
+          "px";
+        break;
+      case "slideDown":
+        this.targetElement.style.height =
+          (this.fullHeight * progressAnimation) / this.duration + "px";
+        break;
+      default:
+        throw new Error(`Animation name ${animationName} was not found!`);
     }
-    this.targetElement.style.display = display;
-    //set start styles
-    this.targetElement.style.height = "0";
-    this.targetElement.style.overflow = "hidden";
-  },
-  oneStepSlideUpAnimate(progressAnimation) {
-    this.targetElement.style.height =
-      this.fullHeight - (this.fullHeight * progressAnimation) / this.duration + "px";
-  },
-  oneStepSlideDownAnimate(progressAnimation) {
-    this.targetElement.style.height = (this.fullHeight * progressAnimation) / this.duration + "px";
   },
   slideUp() {
     return new Promise((resolve) => {
-      this.setStylesBeforeSlideUp();
+      this.setInitialStyles("slideUp");
       runAnimation({
         duration: this.duration,
         animateOneStep: (progressAnimation) => {
-          this.oneStepSlideUpAnimate(progressAnimation);
+          this.oneStepAnimate(progressAnimation, "slideUp");
         },
       }).then(() => {
-        this.clearStylesAfterAnimation(true);
+        this.clearStyles("slideUp");
         resolve();
       });
     });
   },
   slideDown() {
     return new Promise((resolve) => {
-      this.setStylesBeforeSlideDown();
+      this.setInitialStyles("slideDown");
       runAnimation({
         duration: this.duration,
         animateOneStep: (progressAnimation) => {
-          this.oneStepSlideDownAnimate(progressAnimation);
+          this.oneStepAnimate(progressAnimation, "slideDown");
         },
       }).then(() => {
-        this.clearStylesAfterAnimation();
+        this.clearStyles("slideDown");
         resolve();
       });
     });
   },
-  init(target,duration) {
-    if (!exist(target)) throw new Error("Animation target was not found in DOM!");
+  init(target, duration) {
+    if (!exist(target))
+      throw new Error("Animation target was not found in DOM!");
     this.targetElement = target;
     this.fullHeight = target.scrollHeight;
     if (duration) this.duration = duration;
-  }
+  },
 };
