@@ -6,8 +6,9 @@ export const exist = (element) => {
 export const runAnimation = ({
   duration,
   animateOneStep,
-  afterAnimationFn,
+  afterAnimationCallback,
 }) => {
+  console.log(animateOneStep)
   return new Promise((resolve) => {
     let startAnimation = null;
     function step(timestamp) {
@@ -17,7 +18,7 @@ export const runAnimation = ({
       if (progressAnimation < duration) {
         window.requestAnimationFrame(step);
       } else {
-        afterAnimationFn();
+        afterAnimationCallback();
         resolve();
       }
     }
