@@ -7,7 +7,8 @@ console.log(trigger);
 trigger.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("CLICK!");
-  heightAnimation.slideDown(target).then(() => {
+  heightAnimation.init(target);
+  heightAnimation.slideUp().then(() => {
     console.log("DONE!");
   });
 });
