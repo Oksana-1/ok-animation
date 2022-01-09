@@ -1,22 +1,22 @@
 {
-  "name": "ok-expand",
+  "name": "ok-animation",
   "version": "0.0.1",
   "description": "Vanilla js lightweight library for slide-in/slide-out animation",
-  "main": "index.js",
+  "main": "AnimationHandler.js",
   "scripts": {
-    "lint": "eslint index.js",
+    "lint": "eslint",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Oksana-1/ok-expand.git"
+    "url": "git+https://github.com/Oksana-1/ok-animation.git"
   },
   "author": "Oksana",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Oksana-1/ok-expand/issues"
+    "url": "https://github.com/Oksana-1/ok-animation"
   },
-  "homepage": "https://github.com/Oksana-1/ok-expand#readme",
+  "homepage": "https://github.com/Oksana-1/ok-animation#readme",
   "devDependencies": {
     "@babel/cli": "^7.16.7",
     "@babel/core": "^7.16.7",

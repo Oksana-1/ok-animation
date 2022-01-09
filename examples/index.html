@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>Animate height example</title>
   </head>
   <body>
     <div style="max-width: 500px; margin: auto">
@@ -16,6 +16,11 @@
         occaecat cupidatat non proident,
       </div>
     </div>
-    <script src="../index.js" type="module"></script>
+    <script type="module">
+      import { AnimationHandler } from "../src/AnimationHandler.js";
+      const animationHandler = Object.create(AnimationHandler);
+      animationHandler.init();
+      animationHandler.listen("click");
+    </script>
   </body>
 </html>
