@@ -18,6 +18,7 @@ export const HeightAnimation = {
           display = "block";
         }
         this.targetElement.style.display = display;
+        this.fullHeight = this.targetElement.scrollHeight;
         //set start styles
         this.targetElement.style.height = "0";
         this.targetElement.style.overflow = "hidden";
