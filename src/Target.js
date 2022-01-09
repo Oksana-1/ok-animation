@@ -3,6 +3,7 @@ import { HeightAnimation } from "./Animations.js";
 export const Target = {
   targetElement: null,
   heightAnimation: null,
+  duration: null,
   isActive() {
     if (!this.targetElement) return false;
     const stateAttr = this.targetElement.getAttribute("data-state");
@@ -27,9 +28,10 @@ export const Target = {
       });
     });
   },
-  init(targetElement) {
+  init(targetElement, duration) {
     this.targetElement = targetElement;
+    this.duration = duration;
     this.heightAnimation = Object.create(HeightAnimation);
-    this.heightAnimation.init(this.targetElement);
+    this.heightAnimation.init(this.targetElement, this.duration);
   },
 };

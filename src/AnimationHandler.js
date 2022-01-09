@@ -6,6 +6,7 @@ export const AnimationHandler = {
   triggers: [],
   activeTrigger: null,
   targetElement: null,
+  duration: null,
   init() {
     const triggers = document.querySelectorAll("[data-animate-trigger]");
     if (exist(triggers)) this.triggers = Array.from(triggers);
@@ -15,9 +16,10 @@ export const AnimationHandler = {
       document.addEventListener(event, async (e) => {
         this.activeTrigger = e.target;
         this.defineTargetElement();
+        this.defineDuration();
         const activeTrigger = Object.create(Trigger);
         const target = Object.create(Target);
-        target.init(this.targetElement);
+        target.init(this.targetElement, this.duration);
         activeTrigger.init(trigger, target);
         activeTrigger.animate();
       });
@@ -38,4 +40,9 @@ export const AnimationHandler = {
       );
     this.targetElement = targetElement;
   },
+  defineDuration() {
+    const durationId = this.targetElement.getAttribute("data-animate-duration");
+    if (!durationId) return;
+    this.duration = Number(durationId);
+  }
 };
