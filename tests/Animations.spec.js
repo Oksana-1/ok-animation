@@ -8,7 +8,7 @@ const createTestTarget = () => {
 let testTarget;
 let testAnimation;
 
-describe("General animations", () => {
+describe("Animations tests", () => {
   beforeEach(() => {
     testAnimation = Object.create(HeightAnimation);
     testTarget = createTestTarget();
@@ -30,11 +30,22 @@ describe("General animations", () => {
     expect(testTarget.style.overflow).toBeFalsy();
     expect(testTarget.style.height).toBeFalsy();
   });
-  it("`clearStyles` works properly for `slideUp`", () => {
+  it("`clearStyles` works properly for `slideUp` animation", () => {
     testTarget.style.overflow = "scroll";
     testAnimation.clearStyles("slideUp");
     expect(testTarget.style.overflow).toBeFalsy();
     expect(testTarget.style.height).toBeFalsy();
     expect(testTarget.style.display).toBe("none");
   });
+  it.todo("`clearStyles` throws error if wrong animationName given");
+  it.todo("`setInitialStyles` works properly for `slideDown` animation");
+  it.todo("`setInitialStyles` works properly for `slideUp` animation");
+  it.todo("`setInitialStyles` throws error if wrong animationName given");
+  it.todo("`init` throws error if no target passed");
+  it.todo("`init` defines `targetElement`, `fullHeight` and `duration` correctly");
+  it.todo("`oneStepAnimate` works properly for `slideDown` animation");
+  it.todo("`oneStepAnimate` works properly for `slideUp` animation");
+  it.todo("`oneStepAnimate` throws error if wrong animationName given");
+  it.todo("`slideUp` animates height of element from 100% to 0");
+  it.todo("`slideDown` animates height of element from 0 to  100%");
 });
