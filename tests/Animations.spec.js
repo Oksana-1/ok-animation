@@ -12,7 +12,7 @@ describe("Animations tests", () => {
   beforeEach(() => {
     testAnimation = Object.create(HeightAnimation);
     testTarget = createTestTarget();
-    testAnimation.init(testTarget);
+    testAnimation.init(testTarget, 1000);
   });
   afterEach(() => {
     testTarget = undefined;
@@ -37,12 +37,28 @@ describe("Animations tests", () => {
     expect(testTarget.style.height).toBeFalsy();
     expect(testTarget.style.display).toBe("none");
   });
-  it.todo("`clearStyles` throws error if wrong animationName given");
-  it.todo("`setInitialStyles` works properly for `slideDown` animation");
+  it("`clearStyles` throws error if wrong animationName given", () => {
+    expect.assertions(1);
+    try {
+      testAnimation.clearStyles("wrong");
+    } catch (e) {
+      expect(e.message).toBeTruthy();
+    }
+  });
+  it("`setInitialStyles` works properly for `slideDown` animation", () => {
+    testTarget.style.display = "none";
+    testTarget.style.height = "100px";
+    testAnimation.setInitialStyles("slideDown");
+    expect(testTarget.style.display).toBe("block");
+    expect(testTarget.style.height).toBe("0px");
+    expect(testTarget.style.overflow).toBe("hidden");
+  });
   it.todo("`setInitialStyles` works properly for `slideUp` animation");
   it.todo("`setInitialStyles` throws error if wrong animationName given");
   it.todo("`init` throws error if no target passed");
-  it.todo("`init` defines `targetElement`, `fullHeight` and `duration` correctly");
+  it.todo(
+    "`init` defines `targetElement`, `fullHeight` and `duration` correctly"
+  );
   it.todo("`oneStepAnimate` works properly for `slideDown` animation");
   it.todo("`oneStepAnimate` works properly for `slideUp` animation");
   it.todo("`oneStepAnimate` throws error if wrong animationName given");

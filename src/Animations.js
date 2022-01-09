@@ -28,9 +28,16 @@ export const HeightAnimation = {
     }
   },
   clearStyles(animationName) {
-    if (animationName === "slideUp") this.targetElement.style.display = "none";
-    this.targetElement.style.removeProperty("height");
-    this.targetElement.style.removeProperty("overflow");
+    if (animationName === "slideUp") {
+      this.targetElement.style.display = "none";
+      this.targetElement.style.removeProperty("height");
+      this.targetElement.style.removeProperty("overflow");
+    } else if (animationName === "slideDown")  {
+      this.targetElement.style.removeProperty("height");
+      this.targetElement.style.removeProperty("overflow");
+    } else {
+      throw new Error(`Animation name ${animationName} was not found!`);
+    }
   },
   oneStepAnimate(progressAnimation, animationName) {
     switch (animationName) {
